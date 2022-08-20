@@ -1,0 +1,44 @@
+version: '3.0'
+services:
+
+  main:
+    container_name: main
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    env_file:
+      - ./.env
+    volumes:
+      - .:/jwt-auth
+      - /jwt-auth/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: npm run start:dev
+    depends_on:
+    - postgres
+    restart: always
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: "JWTAPI"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "Htxrfkjd1"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d JWTAPI"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
+
+volumes:
+  pgdata:
