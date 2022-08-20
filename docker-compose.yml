@@ -9,8 +9,8 @@ services:
     env_file:
       - ./.env
     volumes:
-      - .:/jwt-auth
-      - /jwt-auth/node_modules
+      - .:/app
+      - /app/node_modules
     ports:
       - 3000:3000
       - 9229:9229

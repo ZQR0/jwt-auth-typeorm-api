@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-WORKDIR D:\Backends\jwt\jwt-auth
+WORKDIR /app
 
 COPY package*.json ./
 
